@@ -1,0 +1,15 @@
+numpy
+pandas
+langchain
+langchain-community
+langchain-huggingface
+langchain-text-splitters
+transformers
+accelerate
+peft
+datasets
+trl
+torch
+sentence-transformers
+bitsandbytes
+chromadb

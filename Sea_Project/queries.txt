@@ -1,0 +1,25 @@
+query: "What are the specific carpet area requirements
+        for classrooms in a Maritime Training Institute
+        based on student intake capacity?"
+
+answer: According to the Training Manual,
+        the carpet area requirement depends on the number of candidates:
+        20 candidates: 30 m²
+        24 candidates: 36 m²
+        40 candidates: 50 m
+
+query: "Summarize the mandatory minimum rest hour
+        requirements for watch-keeping personnel under
+        the STCW Convention, including how these periods
+        can be divided and any permissible exceptions."
+
+answer: The STCW Convention mandates the following for watch-keeping personnel:
+        Daily Minimum: A minimum of 10 hours of rest in any 24-hour period.
+        Weekly Minimum: A total of at least 77 hours of rest in any 7-day period.
+        Division of Rest: The daily 10 hours may be divided into no more than two periods.
+        One of these periods must be at least 6 hours long, and the other must be no
+        less than one hour.
+        Exceptions: Administrations may allow a reduction to 70 hours of rest in a
+        7-day period, but this exception cannot last for more than two weeks.
+        The interval between two periods of exception must be at least twice the
+        duration of the exception itself.

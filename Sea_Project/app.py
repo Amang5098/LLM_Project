@@ -36,7 +36,7 @@ def load_resources():
         bm25_retriever = pickle.load(f)
         
     search_engine = HybridSearch.get(collection, bm25_retriever)
-    rag_generator = RAGGenerator(model_name='llama-3.2-1b:free')
+    rag_generator = RAGGenerator(model_name='llama3.1-8b')
     
     return search_engine, rag_generator
 

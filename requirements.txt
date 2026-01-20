@@ -21,3 +21,4 @@ pytesseract
 pdfplumber
 rank-bm25
 langchain-core
+streamlit

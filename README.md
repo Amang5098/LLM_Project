@@ -1,39 +1,44 @@
-# RAG Experiments & Prototypes
+# Maritime Regulations RAG Pipeline (Sea_Project)
 
-This repository houses a collection of Retrieval-Augmented Generation (RAG) projects and experiments designed to demonstrate advanced document processing, vectorization strategies, and LLM integration for specialized domains.
+This project is a specialized RAG system designed to handle complex maritime documentation, such as STCW guides and training manuals. It features a robust ingestion pipeline capable of dealing with the formatting challenges common in technical manuals.
 
-## Project Structure
+## Key Features
 
-### 1. [Arxiv_Project](./Arxiv_Project)
-A specialized RAG pipeline focused on academic research papers.
-- **Features:** Automated Arxiv PDF downloading, semantic search with ChromaDB, and re-ranking using Cross-Encoders.
-- **Goal:** To accurately answer queries about specific scientific papers, handling complex academic language and citations.
+- **Hybrid PDF Extraction:**
+  - **Text & Tables:** Uses `pdfplumber` to extract structured text and tables, converting tables into Markdown for better LLM comprehension.
+  - **OCR Fallback:** Integrates `pytesseract` and `pdf2image` to handle scanned pages or images where text extraction fails.
+- **Vector Storage:** Persists embeddings in **ChromaDB** for efficient retrieval.
+- **Context-Aware Splitting:** Uses `RecursiveCharacterTextSplitter` to manage chunking while preserving document metadata.
+- **Re-ranking:** Enhances retrieval accuracy using a Cross-Encoder (`ms-marco-MiniLM-L-6-v2`).
 
-### 2. [Sea_Project](./Sea_Project)
-A RAG system tailored for Maritime Regulations and Training Manuals.
-- **Features:** robust PDF processing pipeline capable of handling complex layouts, including table extraction and OCR (Optical Character Recognition) for scanned documents.
-- **Goal:** To provide precise answers regarding maritime safety standards (STCW), regulations, and training requirements.
+## File Structure
 
-### 3. [Prototype](./Prototype)
-A learning sandbox containing Jupyter notebooks that step through the fundamental components of LLM applications:
-- Environment setup
-- Basic LLM interaction
-- Simple RAG implementations
-- Fine-tuning (LoRA) experiments
+- `vectorize.py`: The core ingestion script. It processes PDFs from `rag_data/`, applies OCR/Table extraction logic, deduplicates chunks, and populates the vector database (`seamanuals/`). It also generates `bm25_retriever.pkl` for hybrid search.
+- `Pipeline.ipynb`: The interactive notebook for querying the maritime knowledge base using Hybrid Search (Vector + BM25) and Re-ranking.
+- `in_memory_pipe.ipynb`: A development notebook for testing the extraction and pipeline logic in memory before persistence.
+- `rag_data/`: Directory for storing target PDF manuals (e.g., *STCW_guide_english.pdf*).
+- `../utils/`: Shared utility modules for LLM interaction and search logic.
 
-### 4. [utils](./utils)
-Shared utility library used across projects.
-- **llmclass.py:** Wrapper for OpenAI-compatible LLM API interactions.
-- **search.py:** Implements advanced search logic, including Hybrid Search (Vector + BM25) and Cross-Encoder Re-ranking.
+## Setup & Usage
 
-## Getting Started
+### Dependencies
+In addition to the python requirements (see `../requirements.txt`), this project requires system-level tools for OCR and PDF processing:
+- **Tesseract OCR:** Required for `pytesseract`. Install and ensure it's in your system PATH.
+- **Poppler:** Required for `pdf2image`. Install and ensure it's in your system PATH.
 
-### Prerequisites
-Ensure you have Python installed. The project dependencies are listed in `requirements.txt`.
+**Important:** This project relies on the shared `utils` package located in the parent directory.
 
-```bash
-pip install -r requirements.txt
-```
+### Running the Pipeline
 
-### Usage
-Navigate to the specific project folders (`Arxiv_Project` or `Sea_Project`) and follow the instructions in their respective README files to run the pipelines.
+1.  **Prepare Data:**
+    Place your maritime PDF manuals in the `rag_data/` directory.
+
+2.  **Ingest Data:**
+    Run the vectorization script to process files, deduplicate content, and build the database:
+    ```bash
+    python vectorize.py
+    ```
+    *Output: Creates `seamanuals/` (ChromaDB) and `seamanuals/bm25_retriever.pkl`.*
+
+3.  **Query:**
+    Use `Pipeline.ipynb` to search the database and generate answers to specific regulatory questions.

@@ -12,9 +12,10 @@ if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
 from utils.llmclass import LLM
+
 from utils.search import HybridSearch
 
-# Page Configuration
+## Page Configuration
 st.set_page_config(page_title="Maritime RAG Assistant", page_icon="⚓", layout="centered")
 
 # Title and Caption
